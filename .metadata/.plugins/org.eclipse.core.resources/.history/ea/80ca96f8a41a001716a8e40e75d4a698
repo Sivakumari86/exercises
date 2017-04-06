@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
+<question id="1">  
+    <trade>  
+        <companyName>java is a programming language</companyName>  
+        <indicator>101</indicator>  
+        <currencyCode>ravi</currencyCode>  
+        <fxRate>java is a programming language</fxRate>  
+        <instructionDate>101</instructionDate>  
+        <settlementDate>ravi</settlementDate> 
+         <noOfUnits>101</noOfUnits>  
+        <unitPrice>ravi</unitPrice>  
+    </trade>  
+    <answers>  
+        <answername>java is a platform</answername>  
+        <id>102</id>  
+        <postedby>john</postedby>  
+    </answers>  
+    <questionname>What is java?</questionname>  
+</question>  

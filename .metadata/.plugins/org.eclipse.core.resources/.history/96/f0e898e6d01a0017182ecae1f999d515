@@ -1,0 +1,96 @@
+/**
+ * 
+ */
+package com.jpmg.test;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * @author y
+ *
+ */
+public class Utility {
+	/**
+	 * This method is used to check the given date is falling on weekend and
+	 * change the settlement date to next working day
+	 *
+	 */
+	public static TradingList findDayAndAdjustSettlementOnweekDay(TradingList trading) {
+		TradingList tradingList = new TradingList();
+		List<Trade> tempObj = new ArrayList<Trade>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+		// Locale specifies human language for translating
+		formatter = formatter.withLocale(Locale.UK);
+		for (Trade trade : trading.getTrade()) {
+			
+			//calculate the trading amount and store it in object.
+			double tradeAmunt = calculateTradeAmount(trade);
+			LocalDate ldate = LocalDate.parse(trade.getSettlementDate(), formatter);
+			DayOfWeek day = ldate.getDayOfWeek();
+			System.out.println("day is .." + day + "and the date is.." + trade.getSettlementDate());
+			// check if the day is saturday then move the settlement date to
+			// next working day.
+			if (day.equals(DayOfWeek.SATURDAY)) {
+				// check if the currency is AED or SAR then move the settlement
+				// date to next working day which is sunday else monday.
+				if (("AED".equalsIgnoreCase(trade.getCurrencyCode())
+						|| "SAR".equalsIgnoreCase(trade.getCurrencyCode()))) {
+					ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+					System.out.println("l date is in Saturday block.." + ldate);
+					trade.setTempDate(ldate);
+					tempObj.add(trade);
+				} else {
+					ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+					System.out.println("l date is in Saturday block.." + ldate);
+					trade.setTempDate(ldate);
+					tempObj.add(trade);
+				}
+
+			}
+
+			// check if the day is friday and currency is AED or SAR then move
+			// the settlement date to next working day.
+			else if (day.equals(DayOfWeek.FRIDAY) && ("AED".equalsIgnoreCase(trade.getCurrencyCode())
+					|| "SAR".equalsIgnoreCase(trade.getCurrencyCode()))) {
+				ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+				System.out.println("l date is sunday.." + ldate);
+				trade.setTempDate(ldate);
+				tempObj.add(trade);
+
+			}
+			// check if the day is saterday and currency is not of AED or SAR
+			// then move the settlement date to next working day.
+			else if (day.equals(DayOfWeek.SUNDAY) && !("AED".equalsIgnoreCase(trade.getCurrencyCode())
+					|| "SAR".equalsIgnoreCase(trade.getCurrencyCode()))) {
+				ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+
+				System.out.println("l date is Monday.." + ldate);
+				trade.setTempDate(ldate);
+				tempObj.add(trade);
+			} else {
+				// just add same day in localdate format.
+				trade.setTempDate(ldate);
+				tempObj.add(trade);
+			}
+		}
+		tradingList.setTrade(tempObj);
+		return tradingList;
+	}
+
+	public static double calculateTradeAmount(Trade trade) {
+		// TODO Auto-generated method stub  USD amount of a trade = Price per unit * Units * Agreed Fx 
+		
+		double tradeamunt = 0;
+		tradeamunt = trade.getUnitPrice()*trade.getFxRate()*trade.getNoOfUnits();
+		System.out.println("rading amount is " + tradeamunt);
+		return tradeamunt;
+		
+	}
+
+}

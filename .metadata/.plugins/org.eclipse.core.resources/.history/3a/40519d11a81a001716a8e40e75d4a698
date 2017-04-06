@@ -1,0 +1,33 @@
+/**
+ * 
+ */
+package com.jpmg.test;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
+/**
+ * @author y
+ *
+ */
+public class MainApp {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+            JAXBContext context = JAXBContext.newInstance(Trade.class);
+            Unmarshaller un = context.createUnmarshaller();
+            Trade trade = (Trade) un.unmarshal(new File(FILE_NAME));
+            return emp;
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+		
+		String date = "2016 01 01";
+Utility.findDayOfTheWeek(date);
+	}
+
+}

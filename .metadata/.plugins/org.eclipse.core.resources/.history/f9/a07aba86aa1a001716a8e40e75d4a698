@@ -1,0 +1,39 @@
+/**
+ * 
+ */
+package com.jpmg.test;
+
+import java.io.File;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
+/**
+ * @author y
+ *
+ */
+public class MainApp {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			File inputFile = new File("/com/jpmg/test/tradeprofile.xml");
+			//We need to create JAXContext instance
+            JAXBContext context = JAXBContext.newInstance(Trade.class);
+          //Use JAXBContext instance to create the Unmarshaller.
+            Unmarshaller un = context.createUnmarshaller();
+            Trade trade = (Trade) un.unmarshal(inputFile);
+           
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+		
+		String date = "2016 01 01";
+Utility.findDayOfTheWeek(date);
+	}
+
+}

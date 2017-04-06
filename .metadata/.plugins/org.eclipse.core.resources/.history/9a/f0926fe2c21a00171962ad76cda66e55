@@ -1,0 +1,69 @@
+/**
+ * 
+ */
+package com.jpmg.test;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Locale;
+
+/**
+ * @author y
+ *
+ */
+public class Utility {
+
+	public static String findDayOfTheWeek(TradingList trading) {
+		// new code
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+		formatter = formatter.withLocale(Locale.UK); // Locale specifies human
+														// language for
+														// translating, and
+														// cultural norms for
+														// lowercase/uppercase
+														// and abbreviations and
+														// such. Example:
+														// Locale.US or
+														// Locale.CANADA_FRENCH
+
+		for (Trade trade : trading.getTrade()) {
+			LocalDate ldate = LocalDate.parse(trade.getSettlementDate(), formatter);
+			DayOfWeek day = ldate.getDayOfWeek();
+			System.out.println("day is .." + day + "and the date is.." + trade.getSettlementDate());
+			
+			// check if the day is friday and currency is AED or SAR then move the settlement date to next working day.
+			if (day.equals(DayOfWeek.FRIDAY) && ("AED".equalsIgnoreCase(trade.getCurrencyCode())
+					|| "SAR".equalsIgnoreCase(trade.getCurrencyCode()))) {
+				ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+				System.out.println("l date is sunday.." + ldate);
+				trade.setSettlementDate(ldate.format(formatter));
+				System.out.println("trade  date is ....." + trade.getSettlementDate());
+				trade.setTempDate(ldate);
+			}
+		}
+		LocalDate ldate = LocalDate.parse(trading.toString(), formatter);
+		DayOfWeek day = ldate.getDayOfWeek();
+		System.out.println("day is.." + day);
+
+		if (day.equals(DayOfWeek.SATURDAY) || day.equals(DayOfWeek.SUNDAY)) {
+			ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+
+			System.out.println("l date is .." + ldate);
+		}
+		// int twelve = LocalDate.parse("2016-06-12").getDayOfMonth();
+		return null;
+	}
+
+	public static boolean isHoliday(DayOfWeek day, String currencyCode) {
+		if (day.equals(DayOfWeek.SATURDAY) || day.equals(DayOfWeek.SUNDAY)) {
+			// date = date.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+		}
+		return true;
+	}
+
+}

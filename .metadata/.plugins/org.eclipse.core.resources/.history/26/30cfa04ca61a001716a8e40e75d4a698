@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>  
+<question id="1">  
+    <trade>  
+        <companyName>foo</companyName>  
+        <indicator>B</indicator>  
+        <currencyCode>SGP</currencyCode>  
+        <fxRate>0.50</fxRate>  
+        <instructionDate>01 Jan 2016</instructionDate>  
+        <settlementDate>02 Jan 2016</settlementDate> 
+         <noOfUnits>200</noOfUnits>  
+        <unitPrice>100.25</unitPrice>  
+    </trade>  
+    <trade>  
+        <companyName>bar</companyName>  
+        <indicator>S</indicator>  
+        <currencyCode>AED</currencyCode>  
+        <fxRate>0.22</fxRate>  
+        <instructionDate>05 Jan 2016</instructionDate>  
+        <settlementDate>07 Jan 2016</settlementDate> 
+         <noOfUnits>400</noOfUnits>  
+        <unitPrice>150.5</unitPrice>  
+    </trade>   
+</question>  
