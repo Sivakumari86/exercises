@@ -19,9 +19,10 @@ import java.util.Map;
  *
  */
 public class TradingHelper {
-	
+
 	public static Map<LocalDate, Double> buyMap = new HashMap<LocalDate, Double>();
 	public static Map<LocalDate, Double> sellMap = new HashMap<LocalDate, Double>();
+
 	/**
 	 * This method is used to check the given date is falling on weekend and
 	 * change the settlement date to next working day
@@ -34,13 +35,12 @@ public class TradingHelper {
 		// Locale specifies human language for translating
 		formatter = formatter.withLocale(Locale.UK);
 		for (Trade trade : trading.getTrade()) {
-			
-			//calculate the trading amount and store it in object.
+
+			// calculate the trading amount and store it in object.
 			trade.setTradingAmount(calculateTradeAmount(trade));
-			//double tradeAmunt = calculateTradeAmount(trade);
+			// double tradeAmunt = calculateTradeAmount(trade);
 			LocalDate ldate = LocalDate.parse(trade.getSettlementDate(), formatter);
 			DayOfWeek day = ldate.getDayOfWeek();
-			System.out.println("day is .." + day + "and the date is.." + trade.getSettlementDate());
 			// check if the day is saturday then move the settlement date to
 			// next working day.
 			if (day.equals(DayOfWeek.SATURDAY)) {
@@ -49,12 +49,16 @@ public class TradingHelper {
 				if (("AED".equalsIgnoreCase(trade.getCurrencyCode())
 						|| "SAR".equalsIgnoreCase(trade.getCurrencyCode()))) {
 					ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
-					System.out.println("trading settlement date is adjusted to" + ldate);
+					System.out.println("trading settlement date is adjusted to " + ldate + " from "
+							+ trade.getSettlementDate() + "  since the day is.." + day + " and the currency code is "
+							+ trade.getCurrencyCode());
 					trade.setTempDate(ldate);
 					tempObj.add(trade);
 				} else {
 					ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-					System.out.println("trading settlement date is adjusted to" + ldate);
+					System.out.println("trading settlement date is adjusted to " + ldate + " from "
+							+ trade.getSettlementDate() + " since the day is.." + day + "  and the currency code is "
+							+ trade.getCurrencyCode());
 					trade.setTempDate(ldate);
 					tempObj.add(trade);
 				}
@@ -66,7 +70,9 @@ public class TradingHelper {
 			else if (day.equals(DayOfWeek.FRIDAY) && ("AED".equalsIgnoreCase(trade.getCurrencyCode())
 					|| "SAR".equalsIgnoreCase(trade.getCurrencyCode()))) {
 				ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
-				System.out.println("trading settlement date is adjusted to" + ldate);
+				System.out.println(
+						"trading settlement date is adjusted to " + ldate + " from " + trade.getSettlementDate()
+								+ " since the day is.." + day + " and the currency code is " + trade.getCurrencyCode());
 				trade.setTempDate(ldate);
 				tempObj.add(trade);
 
@@ -77,7 +83,9 @@ public class TradingHelper {
 					|| "SAR".equalsIgnoreCase(trade.getCurrencyCode()))) {
 				ldate = ldate.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
 
-				System.out.println("trading settlement date is adjusted to" + ldate);
+				System.out.println(
+						"trading settlement date is adjusted to " + ldate + " from " + trade.getSettlementDate()
+								+ " Since the day is.." + day + " and the currency code is " + trade.getCurrencyCode());
 				trade.setTempDate(ldate);
 				tempObj.add(trade);
 			} else {
@@ -90,65 +98,75 @@ public class TradingHelper {
 		return tradingList;
 	}
 
+	/**
+	 * This method is used to calculate the trading amount using then formulae.
+	 */
 	public static double calculateTradeAmount(Trade trade) {
-		// TODO Auto-generated method stub  USD amount of a trade = Price per unit * Units * Agreed Fx 
-		
 		double tradeamunt = 0;
-		tradeamunt = trade.getUnitPrice()*trade.getFxRate()*trade.getNoOfUnits();
-		System.out.println("rading amount is " + tradeamunt);
+		tradeamunt = trade.getUnitPrice() * trade.getFxRate() * trade.getNoOfUnits();
 		return tradeamunt;
-		
+
 	}
 
 	public static void findTransactionAmount(TradingList tempList) {
 		List<Trade> tempObj = tempList.getTrade();
-		//just sort to display te report in ascending order..
+		// just sort to display te report in ascending order..
 		tempObj.sort((h1, h2) -> h1.getSettlementDate().compareTo(h2.getSettlementDate()));
-		for (Trade trade : tempObj)
-		{
-			if("B".equalsIgnoreCase(trade.getIndicator())) {
+		for (Trade trade : tempObj) {
+			if ("B".equalsIgnoreCase(trade.getIndicator())) {
 				calculateTotalOutGoingTradeAmount(trade.getTempDate(), trade.getTradingAmount());
-			}
-			else{
+			} else {
 				calculateTotalIncomingTradeAmount(trade.getTempDate(), trade.getTradingAmount());
 			}
 		}
 		System.out.println("                                           ");
-		System.out.println("******************TRADING REPORT***************************");
+		System.out.println("******************  TRADING REPORT   ***************************");
 		// print total out going amount each day
-		buyMap.forEach((k,v)-> System.out.println("Total OutGoing Amount settled on "+k+"is, "+v));
+		buyMap.forEach((k, v) -> System.out.println("Total OutGoing Amount settled on " + k + " is, " + v + " USD"));
 		// print total incoming amount each day
-				sellMap.forEach((k,v)-> System.out.println("Total InComing Amount settled on "+k+"is, "+v));
-				// find the ranking for out going...
-				tempObj.stream().filter(i -> i.getIndicator().equalsIgnoreCase("B")).max(Comparator.comparing(Trade::getTradingAmount))
-		            .ifPresent(max -> System.out.println( max.getCompanyName()+"  is rank 1 for out going"));
+		sellMap.forEach((k, v) -> System.out.println("Total InComing Amount settled on " + k + " is, " + v + " USD"));
+		// find the ranking for out going...
+		tempObj.stream().filter(i -> i.getIndicator().equalsIgnoreCase("B"))
+				.max(Comparator.comparing(Trade::getTradingAmount))
+				.ifPresent(max -> System.out.println(max.getCompanyName() + "  is rank 1 for outGoing"));
 
-				// find the ranking for incoming...
-				tempObj.stream().filter(i -> i.getIndicator().equalsIgnoreCase("S")).max(Comparator.comparing(Trade::getTradingAmount))
-		            .ifPresent(max -> System.out.println( max.getCompanyName()+"  is rank 1 for inComing"));
+		// find the ranking for incoming...
+		tempObj.stream().filter(i -> i.getIndicator().equalsIgnoreCase("S"))
+				.max(Comparator.comparing(Trade::getTradingAmount))
+				.ifPresent(max -> System.out.println(max.getCompanyName() + "  is rank 1 for inComing"));
 
 	}
 
+	/**
+	 * This method is used to calculate out Going amount
+	 * 
+	 * @param date
+	 * @param amount
+	 */
 	private static void calculateTotalOutGoingTradeAmount(LocalDate date, double amount) {
 		double d = 0;
-		if(buyMap.containsKey(date))
-		{
-			 d = buyMap.entrySet().iterator().next().getValue();
-			
+		if (buyMap.containsKey(date)) {
+			d = buyMap.entrySet().iterator().next().getValue();
+
 		}
-		buyMap.put(date, amount+d);
-		
-	}
-	private static void calculateTotalIncomingTradeAmount(LocalDate date, double amount) {
-		double d = 0;
-		if(sellMap.containsKey(date))
-		{
-			 d = sellMap.entrySet().iterator().next().getValue();
-			
-		}
-		sellMap.put(date, amount+d);
-		
+		buyMap.put(date, amount + d);
+
 	}
 
+	/**
+	 * This method is used to calculate Incoming amount
+	 * 
+	 * @param date
+	 * @param amount
+	 */
+	private static void calculateTotalIncomingTradeAmount(LocalDate date, double amount) {
+		double d = 0;
+		if (sellMap.containsKey(date)) {
+			d = sellMap.entrySet().iterator().next().getValue();
+
+		}
+		sellMap.put(date, amount + d);
+
+	}
 
 }
