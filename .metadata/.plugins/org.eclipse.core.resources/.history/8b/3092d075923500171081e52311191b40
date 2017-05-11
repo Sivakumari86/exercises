@@ -1,0 +1,37 @@
+package myProject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import junit.framework.TestCase;
+
+
+public class JournalRankTest extends TestCase{
+	private Journal ja;
+	private Journal jb;
+	private Journal jc;
+	List<Journal> jList ;
+	
+	private JournalRank jrank;
+protected void setUp() {
+		
+	jrank = new JournalRank();
+		
+		
+	}
+	@Test
+	public void rankJournalByScore()
+	{
+		jList = new ArrayList<Journal>();
+		ja = new Journal("Journal A", 5.6);
+		jb = new Journal("Journal B", 2.1);
+		jc = new Journal("Journal C", 3.1);
+		jList.add(ja);
+		jList.add(jb);
+		jList.add(jc);
+	
+	}
+
+}

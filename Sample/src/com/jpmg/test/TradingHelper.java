@@ -41,6 +41,8 @@ public class TradingHelper {
 			// double tradeAmunt = calculateTradeAmount(trade);
 			LocalDate ldate = LocalDate.parse(trade.getSettlementDate(), formatter);
 			DayOfWeek day = ldate.getDayOfWeek();
+			
+			
 			// check if the day is saturday then move the settlement date to
 			// next working day.
 			if (day.equals(DayOfWeek.SATURDAY)) {
@@ -111,14 +113,19 @@ public class TradingHelper {
 	public static void findTransactionAmount(TradingList tempList) {
 		List<Trade> tempObj = tempList.getTrade();
 		// just sort to display te report in ascending order..
-		tempObj.sort((h1, h2) -> h1.getSettlementDate().compareTo(h2.getSettlementDate()));
-		for (Trade trade : tempObj) {
-			if ("B".equalsIgnoreCase(trade.getIndicator())) {
-				calculateTotalOutGoingTradeAmount(trade.getTempDate(), trade.getTradingAmount());
-			} else {
-				calculateTotalIncomingTradeAmount(trade.getTempDate(), trade.getTradingAmount());
-			}
-		}
+//		tempObj.sort((h1, h2) -> h1.getSettlementDate().compareTo(h2.getSettlementDate()));
+//		for (Trade trade : tempObj) {
+//			if ("B".equalsIgnoreCase(trade.getIndicator())) {
+//				calculateTotalOutGoingTradeAmount(trade.getTempDate(), trade.getTradingAmount());
+//			} else {
+//				calculateTotalIncomingTradeAmount(trade.getTempDate(), trade.getTradingAmount());
+//			}
+//		}
+		// just to work on streams..
+		 tempObj.stream().filter(p -> p.getIndicator().equalsIgnoreCase("B"))
+				.forEach(p -> calculateTotalOutGoingTradeAmount(p.getTempDate(), p.getTradingAmount())
+						);
+		
 		System.out.println("                                           ");
 		System.out.println("******************  TRADING REPORT   ***************************");
 		// print total out going amount each day

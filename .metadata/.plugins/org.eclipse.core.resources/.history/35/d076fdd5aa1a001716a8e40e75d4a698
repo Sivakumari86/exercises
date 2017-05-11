@@ -1,5 +1,0 @@
-package com.jpmg.test;
-
-public class TradingList {
-private Trade trade;
-}

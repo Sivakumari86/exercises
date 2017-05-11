@@ -1,0 +1,35 @@
+package myProject;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class JournalRank {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	
+
+	}
+	
+	public Integer getJournalRank(List<Journal> journalList)
+	{
+		int rank = 0;
+		//sort collections
+			Collections.sort(journalList, new Comparator<Journal>() {
+		    @Override
+		    public int compare(Journal c1, Journal c2) {
+		        return Double.compare(c2.getScore(), c1.getScore());
+		    }
+		});
+			
+			//give rank number
+			
+			
+			//print journal ranking
+			journalList.stream().forEach(System.out::println);
+		return 0;
+	}
+
+}

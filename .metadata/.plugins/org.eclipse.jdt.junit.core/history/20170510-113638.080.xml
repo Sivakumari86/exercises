@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ScoreComparatorTest" project="rankingjournals" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="com.mycompany.rankj.ScoreComparatorTest" time="0.0">
+    <testcase name="testCompareEQ" classname="com.mycompany.rankj.ScoreComparatorTest" time="0.0"/>
+    <testcase name="testListByScore" classname="com.mycompany.rankj.ScoreComparatorTest" time="0.0"/>
+    <testcase name="testCompareGT" classname="com.mycompany.rankj.ScoreComparatorTest" time="0.0"/>
+    <testcase name="testSameScoreOrder" classname="com.mycompany.rankj.ScoreComparatorTest" time="0.0"/>
+  </testsuite>
+</testrun>

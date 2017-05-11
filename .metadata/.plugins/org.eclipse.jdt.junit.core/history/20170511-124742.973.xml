@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="JournalRankTest" project="myProject" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="myProject.JournalRankTest" time="12.684">
+    <testcase name="testJournalRankByScore" classname="myProject.JournalRankTest" time="7.479"/>
+    <testcase name="testJournalAndSortWithNameOnSharedRank" classname="myProject.JournalRankTest" time="1.59"/>
+    <testcase name="testJournalWithSharedRank" classname="myProject.JournalRankTest" time="1.6"/>
+    <testcase name="testJournalRankWithExcludeReview" classname="myProject.JournalRankTest" time="2.015"/>
+  </testsuite>
+</testrun>

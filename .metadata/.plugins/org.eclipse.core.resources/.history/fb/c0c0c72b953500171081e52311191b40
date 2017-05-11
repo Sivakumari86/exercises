@@ -1,0 +1,22 @@
+package myProject;
+
+import java.util.Collections;
+import java.util.List;
+
+public class JournalRank {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	
+
+	}
+	
+	public Integer getJournalRank(List<Journal> journalList)
+	{
+		Collections.sort(journalList, (p1, p2) -> p1.getScore() - p2.getScore());
+		//journalList.stream().sorted(comparator)
+		return 0;
+	}
+
+}

@@ -1,0 +1,106 @@
+package myProject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.junit.Test;
+
+import junit.framework.TestCase;
+
+
+public class JournalRankTest extends AbstractMojoTestCase{
+	private Journal ja;
+	private Journal jb;
+	private Journal jc;
+	List<Journal> jList ;
+	List<Journal> result ;
+	
+	private JournalRank jrank;
+protected void setUp() {
+		
+	jrank = new JournalRank();
+		
+		
+	}
+/**
+ * @throws Exception
+ */
+public void testMojoGoal() throws Exception
+{
+    File testPom = new File( getBasedir(),
+      "src/test/resources/unit/basic-test/basic-test-plugin-config.xml" );
+
+    JournalRank mojo = (JournalRank) lookupMojo( "yourGoal", testPom );
+
+    assertNotNull( mojo );
+}
+	@Test
+	public void testJournalRankByScore()
+	{
+		System.out.println("give rank based on score");
+		jList = new ArrayList<Journal>();
+		result = new ArrayList<Journal>();
+		ja = new Journal("Journal A", 5.6);
+		jb = new Journal("Journal B", 2.1);
+		jc = new Journal("Journal C", 3.1);
+		jList.add(ja);
+		jList.add(jb);
+		jList.add(jc);
+		result = jrank.getJournalRank(jList);
+		assertNotNull(result);
+		
+	
+	}
+	//this is to test same ranking
+	@Test
+	public void testJournalWithSharedRank()
+	{
+		System.out.println("Ranking Journal with shared Rank");
+		result = new ArrayList<Journal>();
+		jList = new ArrayList<Journal>();
+		ja = new Journal("Journal A", 5.6);
+		jb = new Journal("Journal B", 5.6);
+		jc = new Journal("Journal C", 3.1);
+		jList.add(ja);
+		jList.add(jb);
+		jList.add(jc);
+		result = jrank.getJournalRank(jList);
+		assertNotNull(result);
+		
+	}
+	//this is to test same ranking and sort based on the name.
+		@Test
+		public void testJournalAndSortWithNameOnSharedRank()
+		{
+			System.out.println("Ranking Journal with shared Rank with alphabetic order");
+			result = new ArrayList<Journal>();
+			jList = new ArrayList<Journal>();
+			ja = new Journal("Journal A", 5.6);
+			jb = new Journal("Journal B", 3.6);
+			jc = new Journal("Journal C", 5.6);
+			jList.add(ja);
+			jList.add(jb);
+			jList.add(jc);
+			result = jrank.getJournalRank(jList);
+			assertNotNull(result);
+		}
+		//Scenario 3: Rank journals excluding review journals 
+		@Test
+		public void testJournalRankWithExcludeReview()
+		{
+			System.out.println("Ranking Journal with excluding review journals ");
+			result = new ArrayList<Journal>();
+			jList = new ArrayList<Journal>();
+			ja = new Journal("Journal A", 5.6, new Boolean(true));
+			jb = new Journal("Journal B", 3.6);
+			jc = new Journal("Journal C", 5.6);
+			jList.add(ja);
+			jList.add(jb);
+			jList.add(jc);
+			result = jrank.getJournalRank(jList);
+			assertNotNull(result);
+		}
+
+}

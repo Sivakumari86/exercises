@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="RankHolderTest" project="rankingjournals" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="com.mycompany.rankj.RankHolderTest" time="0.01">
+    <testcase name="testVoidList" classname="com.mycompany.rankj.RankHolderTest" time="0.001"/>
+    <testcase name="testGetRank" classname="com.mycompany.rankj.RankHolderTest" time="0.007"/>
+    <testcase name="testRankReview" classname="com.mycompany.rankj.RankHolderTest" time="0.001"/>
+    <testcase name="testSameRank" classname="com.mycompany.rankj.RankHolderTest" time="0.001"/>
+    <testcase name="testRankOne" classname="com.mycompany.rankj.RankHolderTest" time="0.0"/>
+  </testsuite>
+</testrun>

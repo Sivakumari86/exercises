@@ -1,0 +1,6 @@
+package myProject;
+
+@Test
+public class AverageTest {
+
+}

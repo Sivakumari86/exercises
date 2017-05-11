@@ -1,0 +1,14 @@
+package myProject;
+
+import org.junit.Test;
+
+
+public class JournalRankTest {
+	
+	@Test
+	public void rankJournalByScore()
+	{
+		
+	}
+
+}

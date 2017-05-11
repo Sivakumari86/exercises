@@ -1,0 +1,19 @@
+package myProject;
+
+import java.util.List;
+
+public class JournalRank {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+	
+
+	}
+	
+	public Integer getJournalRank(List<Journal> journalList)
+	{
+		return 0;
+	}
+
+}

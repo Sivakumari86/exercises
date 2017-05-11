@@ -1,0 +1,74 @@
+package myProject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import junit.framework.TestCase;
+
+
+public class JournalRankTest extends TestCase{
+	private Journal ja;
+	private Journal jb;
+	private Journal jc;
+	List<Journal> jList ;
+	List<Journal> result ;
+	
+	private JournalRank jrank;
+protected void setUp() {
+		
+	jrank = new JournalRank();
+		
+		
+	}
+	@Test
+	public void testRankJournalByScore()
+	{
+		jList = new ArrayList<Journal>();
+		result = new ArrayList<Journal>();
+		ja = new Journal("Journal A", 5.6);
+		jb = new Journal("Journal B", 2.1);
+		jc = new Journal("Journal C", 3.1);
+		jList.add(ja);
+		jList.add(jb);
+		jList.add(jc);
+		result = jrank.getJournalRank(jList);
+		assertNotNull(result);
+		
+	
+	}
+	//this is to test same ranking
+	@Test
+	public void testRankJournalWithSharedRank()
+	{
+		System.out.println("Ranking Journal with shared Rank");
+		result = new ArrayList<Journal>();
+		jList = new ArrayList<Journal>();
+		ja = new Journal("Journal A", 5.6);
+		jb = new Journal("Journal B", 5.6);
+		jc = new Journal("Journal C", 3.1);
+		jList.add(ja);
+		jList.add(jb);
+		jList.add(jc);
+		result = jrank.getJournalRank(jList);
+		assertNotNull(result);
+		
+	}
+	//this is to test same ranking and sort based on the name.
+		@Test
+		public void testRankJournalAndSortWithNameOnSharedRank()
+		{
+			System.out.println("Ranking Journal with shared Rank with alphabetic order");
+			jList = new ArrayList<Journal>();
+			ja = new Journal("Journal A", 5.6);
+			jb = new Journal("Journal B", 3.6);
+			jc = new Journal("Journal C", 5.6);
+			jList.add(ja);
+			jList.add(jb);
+			jList.add(jc);
+			Integer in = jrank.getJournalRank(jList);
+			
+		}
+
+}

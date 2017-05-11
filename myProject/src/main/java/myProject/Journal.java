@@ -1,0 +1,76 @@
+package myProject;
+
+/*
+ * This bean represents a basic journal object
+ * 
+ */
+public class Journal {
+	
+	private String name;
+	private Double score;
+	private Integer rank;
+	private Boolean review = false;
+	
+	public Journal(String name, double score) {
+		this.name = name;
+		this.score = score;
+	}
+	public Journal(String name, double score, Boolean review) {
+		this.name = name;
+		this.score = score;
+		this.review = review;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the score
+	 */
+	public Double getScore() {
+		return score;
+	}
+	/**
+	 * @param score the score to set
+	 */
+	public void setScore(Double score) {
+		this.score = score;
+	}
+	/**
+	 * @return the rank
+	 */
+	public Integer getRank() {
+		return rank;
+	}
+	/**
+	 * @param rank the rank to set
+	 */
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+	/**
+	 * @return the review
+	 */
+	public Boolean isReview() {
+		return review;
+	}
+	/**
+	 * @param review the review to set
+	 */
+	public void setReview(Boolean review) {
+		this.review = review;
+	}
+	@Override
+	public String toString() {
+		return "[" + this.getRank() + " -> " + this.name + " " + this.score + "]";
+	}
+	
+}

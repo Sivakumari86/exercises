@@ -32,10 +32,10 @@ public class MainApp {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-	
-		TradingList tempList = TradingHelper.findDayAndAdjustSettlementOnweekDay(trading);
+		TradingList tempList = TradeJava8.findDayAndAdjustSettlementOnweekDay(trading);
+		//TradingList tempList = TradingHelper.findDayAndAdjustSettlementOnweekDay(trading);
 		// find total incoming and out going amount.
-		TradingHelper.findTransactionAmount(tempList);
+		TradeJava8.generateReport(tempList.getTrade());
 		
 	}
 

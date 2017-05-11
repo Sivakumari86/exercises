@@ -1,0 +1,8 @@
+package myProject;
+
+import org.junit.Test;
+
+
+public class AverageTest {
+
+}

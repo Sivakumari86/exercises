@@ -1,0 +1,22 @@
+package myProject;
+
+import org.junit.Test;
+
+
+
+import junit.framework.TestCase;
+
+
+public class JournalRankTest extends TestCase{
+	private Journal ja;
+	private Journal jb;
+	private Journal jc;
+	
+	private JournalRank jrank;
+	@Test
+	public void rankJournalByScore()
+	{
+		
+	}
+
+}
